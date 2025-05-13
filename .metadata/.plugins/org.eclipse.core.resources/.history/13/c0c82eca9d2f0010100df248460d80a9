@@ -1,0 +1,20 @@
+package com.example.aichatbot.controller;
+
+@Controller
+public class ChatViewController {
+
+    @Autowired
+    private ChatService chatService;
+
+    @GetMapping("/chat")
+    public String chatForm() {
+        return "chat";
+    }
+
+    @PostMapping("/chat")
+    public String chatSubmit(@RequestParam("message") String message, Model model) {
+        String response = chatService.ask(message);
+        model.addAttribute("response", response);
+        return "chat";
+    }
+}

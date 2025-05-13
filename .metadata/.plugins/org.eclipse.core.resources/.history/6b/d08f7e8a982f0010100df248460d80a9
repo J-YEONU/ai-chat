@@ -1,0 +1,19 @@
+package com.example.aichatbot.service;
+
+import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.stereotype.Service;
+
+
+
+@Service
+public class ChatService {
+	private final OpenAiChatModel chatModel;
+	
+	public ChatService(OpenAiChatModel chatModel) {
+        this.chatModel = chatModel;
+    }
+
+    public String ask(String message) {
+        return chatModel.call(message);
+    }
+}

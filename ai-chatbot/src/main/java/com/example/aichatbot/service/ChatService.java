@@ -1,0 +1,32 @@
+package com.example.aichatbot.service;
+
+import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.stereotype.Service;
+
+
+
+@Service
+public class ChatService {
+	private final OpenAiChatModel chatModel;
+	
+	public ChatService(OpenAiChatModel chatModel) {
+        this.chatModel = chatModel;
+    }
+
+    public String ask(String message) {
+    	 String rawResponse = chatModel.call(message + " (답변은 한글로만 작성해 주세요)");
+         
+         // 불필요한 부분 제거 (간단한 필터링 예시)
+         String cleanedResponse = rawResponse
+             // 기존 문자열에서 "Sources:"라는 텍스트 기준으로 나눈뒤 인덱스 0번만 가져오겠다는 뜻
+        	 .split("Sources:")[0] // "Sources:" 이후 내용 제거
+        			 
+             .split("참고:")[0]   // "참고:" 이후 내용 제거
+             .split("Reference:")[0] // "Reference:" 이후 내용 제거
+             .replaceAll("\\[\\d+\\]", "")
+             //공백제거
+             .trim();
+             
+         return cleanedResponse;
+    }
+}

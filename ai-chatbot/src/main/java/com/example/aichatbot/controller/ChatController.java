@@ -1,0 +1,29 @@
+package com.example.aichatbot.controller;
+
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.aichatbot.service.ChatService;
+
+@RestController
+// 내부적으로 모든 메소드에 @ResponseBody가 적용된 것과 같다.
+// 객체(Map, dto등)를 반환하면, JSON으로 변환해서 HTTP응답의 body에 실어 보낸다.
+@RequestMapping("/api/chat")
+public class ChatController {
+	private final ChatService chatService;
+
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
+
+    @GetMapping
+    public Map<String, String> chat(@RequestParam("message") String message) {
+        String response = chatService.ask(message);
+        return Map.of("response", response);
+    }
+    
+}

@@ -1,0 +1,17 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Perplexity 챗봇</title>
+</head>
+<body>
+    <h2>Perplexity 챗봇</h2>
+    <form action="chat" method="post">
+        <input type="text" name="message" placeholder="질문을 입력하세요" required/>
+        <button type="submit">질문하기</button>
+    </form>
+    <c:if test="${not empty response}">
+        <h3>챗봇 응답:</h3>
+        <div>${response}</div>
+    </c:if>
+</body>
+</html>
